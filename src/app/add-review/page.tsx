@@ -5,6 +5,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import { useRouter } from "next/navigation";
 import { Star, Upload, X, Camera, MessageSquare, Tag, Utensils, Send } from "lucide-react";
+import Image from "next/image";
 
 export default function AddReview() {
   const router = useRouter();
@@ -129,7 +130,7 @@ export default function AddReview() {
               </label>
             ) : (
               <div className="relative rounded-2xl overflow-hidden">
-                <img src={imagePreview} alt="Aperçu" className="w-full h-64 object-cover" />
+                <Image src={imagePreview} alt="Aperçu" className="w-full h-64 object-cover" />
                 <button type="button" onClick={removeImage} className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg">
                   <X className="w-4 h-4" />
                 </button>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
+import Link from "next/link";
 
 interface Review {
   title: string;
@@ -102,9 +103,9 @@ export default function ReviewPage() {
               <h1 className="text-2xl font-bold text-white">Books&Bites</h1>
             </div>
             <div className="hidden md:flex items-center space-x-6">
-              <a href="/" className="text-white hover:text-[#ffbdc8] transition duration-300">
+              <Link href="/" className="text-white hover:text-[#ffbdc8] transition duration-300">
                 ← Back
-              </a>
+              </Link>
             </div>
           </div>
         </nav>
