@@ -124,7 +124,7 @@ export default function AddReview() {
                 <div className="border-2 border-dashed border-red-300 rounded-2xl p-8 text-center cursor-pointer hover:border-red-500 hover:bg-red-50 transition-all duration-300 group">
                   <Upload className="w-12 h-12 text-red-400 mx-auto mb-4 group-hover:text-red-500 group-hover:scale-110 transition-all duration-300" />
                   <p className="text-lg font-medium text-gray-700 mb-2">Cliquez pour ajouter une photo</p>
-                  <p className="text-sm text-gray-500">PNG, JPG, GIF jusqu'à 10MB</p>
+                  <p className="text-sm text-gray-500">PNG, JPG, GIF jusqu&apos;&agrave; 10MB</p>
                 </div>
                 <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" required />
               </label>

@@ -84,7 +84,7 @@ export default function ReviewPage() {
     return <p className="container mx-auto p-6 text-center text-gray-600">Review non trouvée.</p>;
   }
 
-  let categorie = review.categories;
+  const categorie = review.categories;
   const res = categorie?.replace("#", "");
 
   return (
