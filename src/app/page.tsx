@@ -118,7 +118,7 @@ export default function HomePage() {
               left: `${20 + (i * 20)}%`,
               top: `${20 + (i * 15)}%`,
               animationDelay: `${i * 0.5}s`,
-              animationDuration: '3s',
+              animationDuration: "3s",
             }}
           >
             {emoji}
@@ -126,11 +126,10 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* Optimized Header */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-xl'
-          : 'bg-gradient-to-r from-[#ffbdc8] via-pink-300 to-[#f00b0d]'
+          ? "bg-white/95 backdrop-blur-md shadow-xl"
+          : "bg-gradient-to-r from-[#ffbdc8] via-pink-300 to-[#f00b0d]"
       }`}>
         <nav className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2 sm:space-x-3">
@@ -257,7 +256,7 @@ export default function HomePage() {
           </p>
           {searchQuery && (
             <p className="mt-4 text-pink-600 font-medium">
-              Found {filteredReviews.length} results for "{searchQuery}"
+              Found {filteredReviews.length} results for &quot;{searchQuery}&quot;
             </p>
           )}
         </div>

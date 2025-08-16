@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Review {
   title: string;
@@ -111,7 +112,7 @@ export default function ReviewPage() {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div className="md:col-span-1">
             <div className="sticky top-6 space-y-6">
-              <img src={review.imageUrl} alt={`Couverture de ${review.title}`} className="w-full max-w-md mx-auto md:mx-0 rounded-xl shadow-lg border border-[#ffbdc8]/20" />
+              <Image src={review.imageUrl} alt={`Couverture de ${review.title}`} className="w-full max-w-md mx-auto md:mx-0 rounded-xl shadow-lg border border-[#ffbdc8]/20" />
               <div className="bg-white rounded-xl shadow-lg border border-[#ffbdc8]/20 p-6">
                 <h3 className="font-bold text-gray-800 mb-3 flex items-center">
                   <span className="text-xl mr-2">🍒</span>
