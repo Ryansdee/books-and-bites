@@ -6,6 +6,7 @@ import { getFirestore, collection, getDocs, query, orderBy } from "firebase/fire
 import Link from "next/link";
 import Image from "next/image";
 
+
 // Firebase config
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
