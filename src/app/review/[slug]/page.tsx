@@ -27,12 +27,6 @@ const mockReview: Review = {
   imageUrl: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop"
 };
 
-const relatedBooks = [
-  { title: "Gone Girl", genre: "Thriller", rating: 4, emoji: "📚" },
-  { title: "Fourth Wing", genre: "Fantasy", rating: 5, emoji: "📖" },
-  { title: "The Silent Patient", genre: "Mystère", rating: 4, emoji: "📕" }
-];
-
 export default function ReviewPage() {
   const { slug } = useParams();
   const [review, setReview] = useState<Review | null>(null);

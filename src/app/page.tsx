@@ -183,8 +183,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
           {/* Logo */}
           <div className="mb-6 sm:mb-8">
-            <div>
-              <img src="/images/logo.png" className="w-140 mx-auto" alt="" />
+            <div className="relative w-140 h-auto mx-auto">
+              <Image src="/images/logo.png" alt="Logo" fill className="object-contain" />
             </div>
           </div>
 
@@ -301,11 +301,12 @@ export default function HomePage() {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Optimized image */}
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={review.imageUrl} 
+                <div className="relative overflow-hidden w-auto h-50 mx-auto"> 
+                  <Image
+                    src={review.imageUrl}
                     alt={review.title}
-                    className="w-full h-48 sm:h-56 object-cover transition-transform duration-500 group-hover:scale-110" 
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

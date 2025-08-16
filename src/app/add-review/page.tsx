@@ -149,7 +149,7 @@ export default function AddReview() {
             </label>
             <input
               type="text"
-              placeholder="Ex: Délicieux burger au restaurant La Belle Époque"
+              placeholder="Ex: Délicieux burger au restaurant La Belle &apos;Époque&apos;"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors"
