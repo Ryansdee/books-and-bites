@@ -183,7 +183,7 @@ export default function HomePage() {
           {/* Logo */}
           <div className="mb-6 sm:mb-8">
             <div className="relative w-140 h-auto mx-auto">
-              <Image src="/images/logo.png" alt="Logo" fill className="object-contain" />
+              <Image src="/images/logo.png" alt="Logo" className="object-contain mx-auto" width={240} height={80} />
             </div>
           </div>
 
