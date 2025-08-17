@@ -208,7 +208,6 @@ export default function AboutPage() {
             data-netlify="true"
             action={"/thank-you"}
             className="space-y-4"
-            netlify
             >
             <input type="hidden" name="form-name" value="contact" />
 
