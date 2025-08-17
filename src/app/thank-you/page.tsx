@@ -17,7 +17,7 @@ export default function ThankYouPage() {
           Thank You!
         </h1>
         <p className="text-gray-600 mb-6">
-          Your message has been successfully sent. We'll get back to you soon.
+          Your message has been successfully sent. We&apos;ll get back to you soon.
         </p>
         <Link
           href="/"

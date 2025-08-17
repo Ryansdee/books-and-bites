@@ -216,7 +216,7 @@ export default function AboutPage() {
             Get in Touch
           </h1>
           <p className="text-gray-600 text-center mb-6">
-            We'd love to hear from you! Reach out for book recommendations, questions, or just to say hi.
+            We&apos;d love to hear from you! Reach out for book recommendations, questions, or just to say hi.
           </p>
 
             <form 

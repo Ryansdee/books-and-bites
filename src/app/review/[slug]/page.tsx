@@ -113,7 +113,7 @@ export default function ReviewPage() {
           <div className="w-24 h-24 bg-gradient-to-br from-pink-100 to-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-4xl">📚</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Review don't existe</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Review don&apos;t existe</h2>
           <p className="text-gray-600 mb-6">The review that you wanna see is not made yet !</p>
           <Link href="/" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#ffbdc8] to-[#f00b0d] text-white font-semibold rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200">
             ← Back
