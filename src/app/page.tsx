@@ -491,7 +491,7 @@ export default function HomePage() {
 
           {/* Connect */}
           <div className="text-center sm:text-left">
-            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Let's get in touch !</h5>
+            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Let&apos;s get in touch !</h5>
             <ul className="space-y-2 sm:space-y-3 flex justify-center sm:justify-start">
               <li>
                 <Link

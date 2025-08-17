@@ -17,10 +17,6 @@ export default function AboutPage() {
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
-  const scrollToReviews = () => {
-    const element = document.getElementById("reviews");
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <div className="bg-gradient-to-br from-pink-50 via-purple-50 to-rose-50 min-h-screen">
