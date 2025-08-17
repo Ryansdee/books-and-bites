@@ -93,16 +93,6 @@ export default function AboutPage() {
             >
               About
             </Link>
-            <Link
-              href="/contact"
-              className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${
-                isScrolled
-                  ? "text-gray-700 hover:text-pink-500 hover:bg-pink-50"
-                  : "text-white hover:text-pink-200 hover:bg-white/10"
-              }`}
-            >
-              Contact
-            </Link>
           </div>
 
           {/* Mobile Button */}
@@ -190,13 +180,6 @@ export default function AboutPage() {
                 >
                   About
                 </Link>
-                <Link
-                  href="/contact"
-                  onClick={closeMobileMenu}
-                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Contact
-                </Link>
               </nav>
 
               <div className="px-6 py-4 border-t border-gray-100">
@@ -225,6 +208,7 @@ export default function AboutPage() {
             data-netlify="true"
             action={"/thank-you"}
             className="space-y-4"
+            netlify
             >
             <input type="hidden" name="form-name" value="contact" />
 

@@ -93,16 +93,6 @@ export default function AboutPage() {
             >
               About
             </Link>
-            <Link
-              href="/contact"
-              className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${
-                isScrolled
-                  ? "text-gray-700 hover:text-pink-500 hover:bg-pink-50"
-                  : "text-white hover:text-pink-200 hover:bg-white/10"
-              }`}
-            >
-              Contact
-            </Link>
           </div>
 
           {/* Mobile Button */}
@@ -174,28 +164,19 @@ export default function AboutPage() {
                 >
                   Home
                 </Link>
-                <button
-                  onClick={() => {
-                    closeMobileMenu();
-                    scrollToReviews();
-                  }}
+                <Link
+                  href="/#reviews"
+                  onClick={closeMobileMenu}
                   className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Reviews
-                </button>
+                </Link>
                 <Link
                   href="/about"
                   onClick={closeMobileMenu}
                   className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
                 >
                   About
-                </Link>
-                <Link
-                  href="/contact"
-                  onClick={closeMobileMenu}
-                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Contact
                 </Link>
               </nav>
 
@@ -211,8 +192,9 @@ export default function AboutPage() {
 
       {/* Main Content */}
       <main className="flex items-center justify-center min-h-screen">
-        <h1 className="text-3xl sm:text-5xl font-bold text-gray-800">
-          Still creating the last chapter...
+        <h1 className="text-3xl sm:text-5xl font-bold text-gray-800 mx-auto text-center px-4 sm:px-6">
+            <Image src={"/images/logo.png"} alt={""} width={360} height={240} className="mx-auto mb-8" />
+          Still writing the last chapter...
         </h1>
       </main>
 

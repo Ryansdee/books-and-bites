@@ -150,9 +150,6 @@ export default function HomePage() {
             <Link href="/about" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
               About
             </Link>
-            <Link href="/contact" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
-              Contact
-            </Link>
           </div>
 
           {/* Mobile Button */}
@@ -234,17 +231,6 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   About
-                </Link>
-                
-                <Link 
-                  href="/contact" 
-                  onClick={closeMobileMenu} 
-                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Contact
                 </Link>
               </nav>
               
@@ -337,7 +323,7 @@ export default function HomePage() {
             <span className="inline-block ml-2">🍒</span>
           </h3>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-            Fresh from our cozy reading nook, with love and lots of tea ☕️✨
+            Fresh from our cozy reading nook, with love and lots of food ✨
           </p>
           {searchQuery && (
             <p className="mt-4 text-pink-600 font-medium">
@@ -428,11 +414,11 @@ export default function HomePage() {
                   
                   <Link
                     href={`/review/${review.titleSlug}`}
-                    className="block text-center bg-gradient-to-r from-[#ffbdc8] to-[#f00b0d] text-white px-4 sm:px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm sm:text-base"
+                    className="block text-center bg-[#ffbdc8] text-black px-4 sm:px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm sm:text-base"
                   >
                     <span className="flex items-center justify-center space-x-2">
-                      <span>Read This Sweetness</span>
-                      <span className="animate-bounce">📖💕</span>
+                      <span>Read Our Review</span>
+                      <span>📖💕</span>
                     </span>
                   </Link>
                 </div>
@@ -458,13 +444,13 @@ export default function HomePage() {
               />
             </div>
             <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
-              Your cozy corner for book reviews, warm recommendations, and literary love 💕
+              Your cozy corner for book reviews, warm recommendations, and comfort food 💕
             </p>
           </div>
 
           {/* Navigation */}
           <div className="text-center sm:text-left">
-            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Navigation</h5>
+            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Links</h5>
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <Link 
@@ -487,23 +473,25 @@ export default function HomePage() {
                   href="/about" 
                   className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
                 >
+                  About
+                </Link>
+              </li>
+              {/* Uncomment if needed
+              <li>
+                <Link 
+                  href="/about" 
+                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
+                >
                   Genres
                 </Link>
               </li>
-              <li>
-                <Link 
-                  href="/contact" 
-                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
-                >
-                  Authors
-                </Link>
-              </li>
+              */}
             </ul>
           </div>
 
           {/* Connect */}
           <div className="text-center sm:text-left">
-            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Connect</h5>
+            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Let's get in touch !</h5>
             <ul className="space-y-2 sm:space-y-3 flex justify-center sm:justify-start">
               <li>
                 <Link

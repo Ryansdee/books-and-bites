@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, Timestamp, where } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,6 +15,7 @@ interface Review {
   categories?: string;
   meal?: string;
   imageUrl: string;
+  Uploaded?: Timestamp; // Optional field for the date of upload
 }
 
 // Mock data pour fallback/demo
@@ -130,7 +131,7 @@ export default function ReviewPage() {
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
         <nav className="container mx-auto px-6 py-6 relative z-10">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 mx-auto">
               <Image src={"/images/logo.png"} alt={""} width={140} height={35} />
             </div>
             <div className="hidden md:flex items-center">
@@ -177,13 +178,19 @@ export default function ReviewPage() {
                 </div>
               </div>
 
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-pink-100 p-6 hover:shadow-2xl transition-all duration-300">
+                <h3 className="font-bold text-gray-800 flex items-center text-lg">
+                  Reviewed on &nbsp;<span className="flex items-center justify-between text-[#f00b0d] font-semibold">{review.Uploaded ? review.Uploaded.toDate().toLocaleDateString() : "Unknown date"}</span>
+                </h3>
+              </div>
+
               {/* Rating card */}
               <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-pink-100 p-6 hover:shadow-2xl transition-all duration-300">
                 <h3 className="font-bold text-gray-800 mb-4 flex items-center text-lg">
                   <div className="w-8 h-8 bg-gradient-to-r from-[#ffbdc8] to-[#f00b0d] rounded-full flex items-center justify-center mr-3">
                     <span className="text-white text-sm">🍒</span>
                   </div>
-                  Globale note
+                  Global note
                 </h3>
                 <div className="flex items-center justify-between">
                   {renderStars(review.rating)}

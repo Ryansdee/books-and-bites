@@ -106,9 +106,9 @@ export default function AddReview() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-2">
-            Partagez votre expérience
+            Review submission form
           </h1>
-          <p className="text-gray-600">Créez un review détaillé avec photos et notes</p>
+          <p className="text-gray-600">Let&apos;s get started</p>
         </div>
 
         {/* Form */}
@@ -117,14 +117,14 @@ export default function AddReview() {
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-lg font-semibold text-gray-800">
               <Camera className="w-5 h-5 text-red-500" />
-              Photo du plat
+              Picture
             </div>
             {!imagePreview ? (
               <label className="block">
                 <div className="border-2 border-dashed border-red-300 rounded-2xl p-8 text-center cursor-pointer hover:border-red-500 hover:bg-red-50 transition-all duration-300 group">
                   <Upload className="w-12 h-12 text-red-400 mx-auto mb-4 group-hover:text-red-500 group-hover:scale-110 transition-all duration-300" />
-                  <p className="text-lg font-medium text-gray-700 mb-2">Cliquez pour ajouter une photo</p>
-                  <p className="text-sm text-gray-500">PNG, JPG, GIF jusqu&apos;&agrave; 10MB</p>
+                  <p className="text-lg font-medium text-gray-700 mb-2">Drop or click to add picture</p>
+                  <p className="text-sm text-gray-500">PNG, JPG, GIF MAX 10MB</p>
                 </div>
                 <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" required />
               </label>
@@ -144,7 +144,7 @@ export default function AddReview() {
                     <X className="w-4 h-4" />
                   </button>
                   <div className="absolute bottom-3 left-3 bg-black/50 text-white px-3 py-1 rounded-lg text-sm">
-                    Image sélectionnée ✓
+                    Picture selected
                   </div>
                 </div>
             )}
@@ -154,11 +154,11 @@ export default function AddReview() {
           <div className="space-y-3">
             <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
               <MessageSquare className="w-5 h-5 text-red-500" />
-              Titre du review
+              Title of the book
             </label>
             <input
               type="text"
-              placeholder="Ex: Délicieux burger au restaurant La Belle &apos;Époque&apos;"
+              placeholder="Ex: Happy place by Emily Henry"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 text-black focus:border-red-500 focus:outline-none text-lg transition-colors"
@@ -170,7 +170,7 @@ export default function AddReview() {
           <div className="space-y-3">
             <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
               <Star className="w-5 h-5 text-red-500" />
-              Votre note
+              Global rating
             </label>
             <div className="flex items-center gap-1">
               {renderStars()}
@@ -182,10 +182,10 @@ export default function AddReview() {
           <div className="space-y-3">
             <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
               <MessageSquare className="w-5 h-5 text-red-500" />
-              Votre review
+              Our review
             </label>
             <textarea
-              placeholder="Décrivez votre expérience : goût, présentation, service, ambiance..."
+              placeholder="Copy paste from insta don't be dumb"
               value={review}
               onChange={(e) => setReview(e.target.value)}
               rows={6}
@@ -200,16 +200,16 @@ export default function AddReview() {
             <div className="space-y-3">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
                 <Tag className="w-5 h-5 text-red-500" />
-                Catégories
+                Categories
               </label>
-              <input type="text" placeholder="#italien #pizza" value={categories} onChange={(e) => setCategories(e.target.value)} className="w-full px-4 py-4 rounded-xl text-black border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
+              <input type="text" placeholder="#romance #thriller #whatever" value={categories} onChange={(e) => setCategories(e.target.value)} className="w-full px-4 py-4 rounded-xl text-black border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
             </div>
             <div className="space-y-3">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
                 <Utensils className="w-5 h-5 text-red-500" />
-                Contexte du repas
+                Meal
               </label>
-              <input type="text" placeholder="Repas d'affaires, sortie en famille..." value={meal} onChange={(e) => setMeal(e.target.value)} className="w-full px-4 py-4 text-black rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
+              <input type="text" placeholder="Sushi, Burger King,..." value={meal} onChange={(e) => setMeal(e.target.value)} className="w-full px-4 py-4 text-black rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
             </div>
           </div>
 
@@ -219,12 +219,12 @@ export default function AddReview() {
               {isSubmitting ? (
                 <>
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Publication en cours...
+                  Review is being typed..
                 </>
               ) : (
                 <>
                   <Send className="w-5 h-5" />
-                  Publier mon review
+                  Submit your review !
                 </>
               )}
             </button>
@@ -232,9 +232,6 @@ export default function AddReview() {
         </form>
 
         {/* Footer */}
-        <div className="text-center mt-6 text-sm text-gray-500">
-          <p>Votre review sera visible publiquement après validation</p>
-        </div>
       </div>
     </div>
   );
