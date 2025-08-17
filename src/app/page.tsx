@@ -127,7 +127,7 @@ export default function HomePage() {
         ))}
       </div>
 
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+<header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
           ? "bg-white/95 backdrop-blur-md shadow-xl"
           : "bg-gradient-to-r from-[#ffbdc8] via-pink-300 to-[#f00b0d]"
@@ -141,84 +141,168 @@ export default function HomePage() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Link href="/" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>Home</Link>
-            <button onClick={scrollToReviews} className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>Reviews</button>
-            <Link href="/about" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>About</Link>
-            <Link href="/contact" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>Contact</Link>
+            <Link href="/" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
+              Home
+            </Link>
+            <button onClick={scrollToReviews} className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
+              Reviews
+            </button>
+            <Link href="/about" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
+              About
+            </Link>
+            <Link href="/contact" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
+              Contact
+            </Link>
           </div>
 
           {/* Mobile Button */}
-          <button onClick={toggleMobileMenu} className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${isScrolled ? 'text-gray-700 hover:bg-pink-50' : 'text-white hover:bg-white/10'}`} aria-label="Toggle menu">
+          <button 
+            onClick={toggleMobileMenu} 
+            className={`lg:hidden p-2 rounded-lg transition-all duration-300 ${isScrolled ? 'text-gray-700 hover:bg-pink-50' : 'text-white hover:bg-white/10'}`} 
+            aria-label="Toggle menu"
+          >
             <svg className={`w-6 h-6 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
             </svg>
           </button>
         </nav>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white/98 backdrop-blur-md shadow-2xl border-t border-pink-200 transition-all duration-300 overflow-hidden">
-            <div className="container mx-auto px-4 py-6 flex flex-col space-y-3">
-              <Link href="/" onClick={closeMobileMenu} className="block px-4 py-3 text-gray-700 hover:text-pink-500 hover:bg-pink-50 rounded-lg font-medium">Home</Link>
-              <button onClick={() => { closeMobileMenu(); scrollToReviews(); }} className="block px-4 py-3 text-gray-700 hover:text-pink-500 hover:bg-pink-50 rounded-lg font-medium">Reviews</button>
-              <Link href="/about" onClick={closeMobileMenu} className="block px-4 py-3 text-gray-700 hover:text-pink-500 hover:bg-pink-50 rounded-lg font-medium">About</Link>
-              <Link href="/contact" onClick={closeMobileMenu} className="block px-4 py-3 text-gray-700 hover:text-pink-500 hover:bg-pink-50 rounded-lg font-medium">Contact</Link>
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* Hero Section - Optimized for mobile */}
-      <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden">
-        {/* Background Image with better mobile optimization */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-          }}
-        >
-          <div className="absolute inset-0 bg-pink-400/60"></div>
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
-          {/* Logo */}
-          <div className="mb-6 sm:mb-8">
-            <div className="relative w-140 h-auto mx-auto">
-              <Image src="/images/logo.png" alt="Logo" className="object-contain mx-auto" width={240} height={80} />
+      {/* Menu Mobile - Séparé du header pour éviter les conflits z-index */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Overlay avec fermeture au clic */}
+          <div 
+            className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+            onClick={closeMobileMenu}
+            aria-hidden="true"
+          />
+          
+          {/* Menu principal */}
+          <div 
+            className="lg:hidden fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mobile-menu-title"
+          >
+            <div className="relative w-full max-w-sm bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl transition-all duration-300 transform scale-100 pointer-events-auto">
+              {/* Header avec bouton de fermeture */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                <h2 id="mobile-menu-title" className="text-lg font-semibold text-gray-900">
+                  Navigation
+                </h2>
+                <button
+                  onClick={closeMobileMenu}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                  aria-label="Fermer le menu"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Navigation */}
+              <nav className="p-4 space-y-2">
+                <Link 
+                  href="/" 
+                  onClick={closeMobileMenu} 
+                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                  Home
+                </Link>
+                
+                <button 
+                  onClick={() => { closeMobileMenu(); scrollToReviews(); }} 
+                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                  Reviews
+                </button>
+                
+                <Link 
+                  href="/about" 
+                  onClick={closeMobileMenu} 
+                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  About
+                </Link>
+                
+                <Link 
+                  href="/contact" 
+                  onClick={closeMobileMenu} 
+                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  Contact
+                </Link>
+              </nav>
+              
+              {/* Footer optionnel */}
+              <div className="px-6 py-4 border-t border-gray-100">
+                <p className="text-sm text-gray-500 text-center">
+                  &copy; 2025 Books&Bites. All Rights Reserved.
+                </p>
+              </div>
             </div>
           </div>
+        </>
+      )}
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 drop-shadow-2xl leading-tight px-4">
-            Discover your next
-            <span className="block text-pink-100">magical read</span>
-          </h2>
-
-          <p className="text-lg sm:text-xl text-pink-100 mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
-            Where every book is a sweet adventure waiting to be savored 💕
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4">
-            <Link
-              href="/add-review"
-              className="bg-white text-[#f00b0d] px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-lg shadow-2xl hover:shadow-pink-300/50 hover:scale-105 transform transition-all duration-300 group"
-            >
-              <span className="flex items-center justify-center space-x-2">
-                <span>Add Your Review</span>
-                <span className="group-hover:animate-spin">💖</span>
-              </span>
-            </Link>
-            <button 
-              onClick={scrollToReviews}
-              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[#f00b0d] transform hover:scale-105 transition-all duration-300 shadow-2xl backdrop-blur-sm"
-            >
-              <span className="flex items-center justify-center space-x-2">
-                <span>Explore Magic</span>
-                <span className="animate-bounce">✨</span>
-              </span>
-            </button>
+        <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+            }}
+          >
+            <div className="absolute inset-0 bg-pink-400/60"></div>
           </div>
-        </div>
-      </section>
+
+          <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+            <div className="mb-6 sm:mb-8 flex justify-center">
+              <Image 
+                src="/images/logo.png" 
+                alt="Logo" 
+                className="w-40 sm:w-60 lg:w-72 h-auto" 
+                width={240} 
+                height={80} 
+              />
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 drop-shadow-2xl leading-tight px-4">
+              Discover your next
+              <span className="block text-pink-100">magical read</span>
+            </h2>
+
+            <p className="text-lg sm:text-xl text-pink-100 mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
+              Where every book is a sweet adventure waiting to be savored 💕
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4">
+              <button 
+                onClick={scrollToReviews}
+                className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[#f00b0d] transform hover:scale-105 transition-all duration-300 shadow-2xl backdrop-blur-sm"
+              >
+                <span className="flex items-center justify-center space-x-2">
+                  <span>Explore Magic</span>
+                  <span className="animate-bounce">✨</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </section>
+
 
       {/* Search Section - Mobile Optimized */}
       <section className="py-8 sm:py-12 bg-white/80 backdrop-blur-sm">
@@ -358,66 +442,97 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Optimized Footer */}
-      <footer className="bg-gray-800 text-white py-12 sm:py-16">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="space-y-4 text-center sm:text-left lg:col-span-1">
-              <div className="flex items-center justify-center sm:justify-start space-x-3 group">
-                <span className="text-2xl sm:text-3xl group-hover:animate-spin transition-transform duration-300">🍒</span>
-                <h4 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-pink-300 to-rose-300 bg-clip-text text-transparent">
-                  Books&Bites
-                </h4>
-              </div>
-              <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
-                Your cozy corner for book reviews, warm recommendations, and literary love 💕
-              </p>
-              <div className="flex justify-center sm:justify-start space-x-2">
-                {['🌸', '📚', '☕️', '💕'].map((emoji, i) => (
-                  <span 
-                    key={i} 
-                    className="text-xl sm:text-2xl opacity-60 hover:opacity-100 animate-bounce cursor-pointer" 
-                    style={{ animationDelay: `${i * 0.2}s` }}
-                  >
-                    {emoji}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            {[
-              { title: "Navigation", items: ["Home", "Reviews", "Genres", "Authors"] },
-              { title: "Connect", items: ["Instagram 📸"] }
-            ].map((section, i) => (
-              <div key={i} className="text-center sm:text-left">
-                <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">{section.title}</h5>
-                <ul className="space-y-2 sm:space-y-3">
-                  {section.items.map((item, j) => (
-                    <li key={j}>
-                      <a
-                        href="#"
-                        className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
-                      >
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+    <footer className="bg-gray-800 text-white py-12 sm:py-16">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           
-          <div className="border-t border-gray-700 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center">
-            <p className="text-gray-400 text-sm sm:text-base">
-              &copy; 2025 Books&Bites. All rights reserved. Made with 
-              <span className="text-pink-400 animate-pulse mx-1">💕</span> 
-              and lots of 
-              <span className="animate-bounce inline-block mx-1">🍒</span>
-              for book lovers everywhere.
+          {/* Logo + description */}
+          <div className="space-y-4 text-center sm:text-left lg:col-span-1">
+            <div className="flex items-center justify-center sm:justify-start space-x-3 group">
+              <Image 
+                src="/images/logo.png" 
+                alt="Logo" 
+                width={240} 
+                height={120} 
+                className="w-auto h-auto rounded-full transition-transform duration-300"
+              />
+            </div>
+            <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
+              Your cozy corner for book reviews, warm recommendations, and literary love 💕
             </p>
           </div>
+
+          {/* Navigation */}
+          <div className="text-center sm:text-left">
+            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Navigation</h5>
+            <ul className="space-y-2 sm:space-y-3">
+              <li>
+                <Link 
+                  href="/" 
+                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="#reviews" 
+                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
+                >
+                  Reviews
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/about" 
+                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
+                >
+                  Genres
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/contact" 
+                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
+                >
+                  Authors
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Connect */}
+          <div className="text-center sm:text-left">
+            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Connect</h5>
+            <ul className="space-y-2 sm:space-y-3 flex justify-center sm:justify-start">
+              <li>
+                <Link
+                  href="https://www.instagram.com/bookssnbites/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base space-x-2"
+                >
+                  <span>Instagram</span>
+                  <Image src="/images/insta.png" alt="Instagram" width={20} height={20} />
+                </Link>
+              </li>
+            </ul>
+          </div>
+
         </div>
-      </footer>
+        
+        {/* Bottom */}
+        <div className="border-t border-gray-700 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center">
+          <p className="text-gray-400 text-sm sm:text-base">
+            &copy; 2025 Books&Bites. All rights reserved. Made with 
+            <span className="text-pink-400 animate-pulse mx-1">💕</span> 
+            and lots of 
+            <span className="animate-bounce inline-block mx-1">🍒</span>
+            for book lovers everywhere.
+          </p>
+        </div>
+      </div>
+    </footer>
 
       {/* Custom optimized styles */}
       <style jsx>{`

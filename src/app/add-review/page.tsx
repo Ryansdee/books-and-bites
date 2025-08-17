@@ -129,15 +129,24 @@ export default function AddReview() {
                 <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" required />
               </label>
             ) : (
-              <div className="relative rounded-2xl overflow-hidden">
-                <Image src={imagePreview} alt="Aperçu" className="w-full h-64 object-cover" />
-                <button type="button" onClick={removeImage} className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg">
-                  <X className="w-4 h-4" />
-                </button>
-                <div className="absolute bottom-3 left-3 bg-black/50 text-white px-3 py-1 rounded-lg text-sm">
-                  Image sélectionnée ✓
+                <div className="relative rounded-2xl overflow-hidden w-full h-64">
+                  <Image 
+                    src={imagePreview} 
+                    alt="Aperçu" 
+                    fill
+                    className="object-cover"
+                  />
+                  <button 
+                    type="button" 
+                    onClick={removeImage} 
+                    className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                  <div className="absolute bottom-3 left-3 bg-black/50 text-white px-3 py-1 rounded-lg text-sm">
+                    Image sélectionnée ✓
+                  </div>
                 </div>
-              </div>
             )}
           </div>
 
@@ -152,7 +161,7 @@ export default function AddReview() {
               placeholder="Ex: Délicieux burger au restaurant La Belle &apos;Époque&apos;"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors"
+              className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 text-black focus:border-red-500 focus:outline-none text-lg transition-colors"
               required
             />
           </div>
@@ -180,7 +189,7 @@ export default function AddReview() {
               value={review}
               onChange={(e) => setReview(e.target.value)}
               rows={6}
-              className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg resize-none transition-colors"
+              className="w-full px-4 py-4 rounded-xl border-2 text-black border-gray-200 focus:border-red-500 focus:outline-none text-lg resize-none transition-colors"
               required
             />
             <div className="text-sm text-gray-500 text-right">{review.length}/500 caractères</div>
@@ -193,14 +202,14 @@ export default function AddReview() {
                 <Tag className="w-5 h-5 text-red-500" />
                 Catégories
               </label>
-              <input type="text" placeholder="#italien #pizza" value={categories} onChange={(e) => setCategories(e.target.value)} className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
+              <input type="text" placeholder="#italien #pizza" value={categories} onChange={(e) => setCategories(e.target.value)} className="w-full px-4 py-4 rounded-xl text-black border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
             </div>
             <div className="space-y-3">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
                 <Utensils className="w-5 h-5 text-red-500" />
                 Contexte du repas
               </label>
-              <input type="text" placeholder="Repas d'affaires, sortie en famille..." value={meal} onChange={(e) => setMeal(e.target.value)} className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
+              <input type="text" placeholder="Repas d'affaires, sortie en famille..." value={meal} onChange={(e) => setMeal(e.target.value)} className="w-full px-4 py-4 text-black rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
             </div>
           </div>
 
