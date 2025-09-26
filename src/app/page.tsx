@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState, useCallback, useMemo} from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy } from "firebase/firestore";
 import Link from "next/link";
 import Image from "next/image";
-
 
 // Firebase config
 const firebaseConfig = {
@@ -32,8 +31,6 @@ interface Review {
   imageUrl: string;
 }
 
-const FLOATING_EMOJIS = ['🌸', '💕', '✨', '🦋', '🌺', '💖', '🎀', '🌙'];
-
 export default function HomePage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,502 +38,249 @@ export default function HomePage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Optimized scroll handler
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Fetch reviews with error handling
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         setLoading(true);
         const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         const snap = await getDocs(q);
-        setReviews(snap.docs.map(doc => doc.data() as Review));
+        setReviews(snap.docs.map((doc) => doc.data() as Review));
       } catch (error) {
         console.error("Error fetching reviews:", error);
-        // You could add a toast notification here
       } finally {
         setLoading(false);
       }
     };
-    
     fetchReviews();
   }, []);
 
-  // Optimized search filter
   const filteredReviews = useMemo(() => {
     if (!searchQuery) return reviews;
-    return reviews.filter(review => 
-      review.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      review.categories?.toLowerCase().includes(searchQuery.toLowerCase())
+    return reviews.filter(
+      (review) =>
+        review.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        review.categories?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [reviews, searchQuery]);
 
-  // Optimized star rendering
-  const renderStars = useCallback((rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <span 
-        key={i} 
-        className={`text-lg transition-colors duration-300 ${
-          i < rating ? 'text-pink-400' : 'text-gray-300'
-        }`}
-      >
-        ✨
-      </span>
-    ));
-  }, []);
+const renderStars = useCallback((rating: number) => {
+return Array.from({ length: 5 }, (_, i) => (
+<span key={i} className={`text-lg ${i < rating ? "text-[#d4739f]" : "text-gray-300"}`}>
+★
+</span>
+));
+}, []);
 
-  const toggleMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen(prev => !prev);
-  }, []);
-
-  const closeMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen(false);
-  }, []);
-
-  // Scroll to reviews section
+  const toggleMobileMenu = useCallback(() => setIsMobileMenuOpen((prev) => !prev), []);
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), []);
   const scrollToReviews = useCallback(() => {
-    const reviewsSection = document.getElementById('reviews');
-    reviewsSection?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("reviews")?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-pink-50 via-purple-50 to-rose-50 min-h-screen">
-      {/* Optimized floating elements - reduced for performance */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {FLOATING_EMOJIS.slice(0, 4).map((emoji, i) => (
-          <div
-            key={i}
-            className="absolute text-xl sm:text-2xl opacity-20 animate-bounce"
-            style={{
-              left: `${20 + (i * 20)}%`,
-              top: `${20 + (i * 15)}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: "3s",
-            }}
-          >
-            {emoji}
-          </div>
-        ))}
-      </div>
+    <div className="bg-white text-gray-900 min-h-screen">
+      {/* HEADER */}
+<header
+  className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+    isScrolled ? "bg-white shadow" : "bg-black/70"
+  }`}
+>
+  <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
+    {/* Logo */}
+    <Link href="/" className="flex items-center space-x-2">
+      <Image src="/images/logo.png" alt="Logo" width={50} height={50} />
+    </Link>
 
-<header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-xl"
-          : "bg-gradient-to-r from-[#ffbdc8] via-pink-300 to-[#f00b0d]"
-      }`}>
-        <nav className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <div className={`transition-colors duration-300 ${isScrolled ? 'text-pink-500' : 'text-white'}`}>
-              <Image src="/images/logo.png" alt="Logo" width={80} height={80} />
-            </div>
-          </div>
+    {/* Desktop Menu */}
+    <div className="hidden lg:flex items-center space-x-8 font-medium">
+      <Link href="/" className={`hover:text-pink-300 ${isScrolled ? "text-black" : "text-white"} transition`}>Home</Link>
+      <button
+        onClick={scrollToReviews}
+        className={`hover:text-pink-300 ${isScrolled ? "text-black" : "text-white"} transition`}
+        style={{ cursor: "pointer" }}
+      >
+        Reviews
+      </button>
+      <Link href="/about" className={`hover:text-pink-300 ${isScrolled ? "text-black" : "text-white"} transition`}>About</Link>
+    </div>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-6">
-            <Link href="/" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
-              Home
-            </Link>
-            <button onClick={scrollToReviews} className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
-              Reviews
-            </button>
-            <Link href="/about" className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-pink-500 hover:bg-pink-50' : 'text-white hover:text-pink-200 hover:bg-white/10'}`}>
-              About
-            </Link>
-          </div>
+    {/* Mobile Menu Button */}
+    <button
+      onClick={toggleMobileMenu}
+      className="lg:hidden p-2 rounded-md text-white hover:bg-gray-700 transition"
+      style={{ background: "#d4739fff" }} // bleu foncé
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+        />
+      </svg>
+    </button>
+  </nav>
 
-          {/* Mobile Button */}
-          <button 
-            onClick={toggleMobileMenu} 
-            className={`lg:hidden p-2 rounded-lg transition-all duration-300 ${isScrolled ? 'text-gray-700 hover:bg-pink-50' : 'text-white hover:bg-white/10'}`} 
-            aria-label="Toggle menu"
-          >
-            <svg className={`w-6 h-6 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
+  {/* Mobile Menu Drawer */}
+  {isMobileMenuOpen && (
+    <div className="lg:hidden absolute top-full left-0 w-full my-auto h-auto text-white shadow-md" style={{backdropFilter: "blur(10px)", background:"#d4739fff"}}>
+      <nav className="flex flex-col items-center py-6 space-y-10 mx-auto">
+        <Link href="/" onClick={closeMobileMenu} className="hover:text-blue-500 transition">Home</Link>
+        <button
+          onClick={() => {
+            closeMobileMenu();
+            scrollToReviews();
+          }}
+          className="hover:text-blue-500 transition"
+        >
+          Reviews
+        </button>
+        <Link href="/about" onClick={closeMobileMenu} className="hover:text-blue-500 transition">About</Link>
+      </nav>
+    </div>
+  )}
+</header>
+
+
+      {/* HERO */}
+      <section className="relative bg-black text-white min-h-[80vh] flex items-center justify-center text-center px-6">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl sm:text-6xl font-bold mb-6 leading-tight">
+            Discover <span style={{color:"#d4739fff"}}>Inspiring</span>  Books & <span style={{color:"#d4739fff"}}>Honest</span> Reviews
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-300 mb-8">
+            Books&Bites is your trusted corner for book reviews, reading insights, and curated recommendations.
+          </p>
+          <button
+            onClick={scrollToReviews}
+            className="px-8 py-4 rounded-full font-semibold shadow-md transition" style={{background:"#d4739fff", cursor:"pointer"}} >
+            Explore Reviews
           </button>
-        </nav>
-      </header>
-
-      {/* Menu Mobile - Séparé du header pour éviter les conflits z-index */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Overlay avec fermeture au clic */}
-          <div 
-            className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
-            onClick={closeMobileMenu}
-            aria-hidden="true"
-          />
-          
-          {/* Menu principal */}
-          <div 
-            className="lg:hidden fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="mobile-menu-title"
-          >
-            <div className="relative w-full max-w-sm bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl transition-all duration-300 transform scale-100 pointer-events-auto">
-              {/* Header avec bouton de fermeture */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-100">
-                <h2 id="mobile-menu-title" className="text-lg font-semibold text-gray-900">
-                  Navigation
-                </h2>
-                <button
-                  onClick={closeMobileMenu}
-                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
-                  aria-label="Fermer le menu"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              
-              {/* Navigation */}
-              <nav className="p-4 space-y-2">
-                <Link 
-                  href="/" 
-                  onClick={closeMobileMenu} 
-                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                  Home
-                </Link>
-                
-                <button 
-                  onClick={() => { closeMobileMenu(); scrollToReviews(); }} 
-                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                  </svg>
-                  Reviews
-                </button>
-                
-                <Link 
-                  href="/about" 
-                  onClick={closeMobileMenu} 
-                  className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  About
-                </Link>
-              </nav>
-              
-              {/* Footer optionnel */}
-              <div className="px-6 py-4 border-t border-gray-100">
-                <p className="text-sm text-gray-500 text-center">
-                  &copy; 2025 Books&Bites. All Rights Reserved.
-                </p>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
-        <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-            }}
-          >
-            <div className="absolute inset-0 bg-pink-400/60"></div>
-          </div>
-
-          <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
-            <div className="mb-6 sm:mb-8 flex justify-center">
-              <Image 
-                src="/images/logo.png" 
-                alt="Logo" 
-                className="w-40 sm:w-60 lg:w-72 h-auto" 
-                width={240} 
-                height={80} 
-              />
-            </div>
-
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 drop-shadow-2xl leading-tight px-4">
-              Discover your next
-              <span className="block text-pink-100">magical read</span>
-            </h2>
-
-            <p className="text-lg sm:text-xl text-pink-100 mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
-              Where every book is a sweet adventure waiting to be savored 💕
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4">
-              <button 
-                onClick={scrollToReviews}
-                className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[#f00b0d] transform hover:scale-105 transition-all duration-300 shadow-2xl backdrop-blur-sm"
-              >
-                <span className="flex items-center justify-center space-x-2">
-                  <span>Explore Magic</span>
-                  <span className="animate-bounce">✨</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </section>
-
-
-      {/* Search Section - Mobile Optimized */}
-      <section className="py-8 sm:py-12 bg-white/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-md mx-auto">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search for books, genres... 📚"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 rounded-full border-2 border-pink-200 focus:border-pink-400 focus:outline-none bg-white/90 text-gray-700 font-medium shadow-lg text-center sm:text-left"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Reviews Section - Optimized Grid */}
-      <main className="container mx-auto px-4 sm:px-6 py-12 sm:py-16" id="reviews">
-        <div className="text-center mb-12 sm:mb-16">
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
-            <span className="text-[#f00b0d]">Latest</span> Sweet Reviews 
-            <span className="inline-block ml-2">🍒</span>
-          </h3>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-            Fresh from our cozy reading nook, with love and lots of food ✨
-          </p>
-          {searchQuery && (
-            <p className="mt-4 text-pink-600 font-medium">
-              Found {filteredReviews.length} results for &quot;{searchQuery}&quot;
-            </p>
-          )}
+      {/* SEARCH */}
+      <section className="py-12 bg-gray-50 border-b">
+        <div className="container mx-auto px-6 max-w-lg">
+          <input
+            type="text"
+            placeholder="Search books, authors, or genres..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-5 py-3 rounded-lg border focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          />
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {loading ? (
-            // Optimized loading state
-            <div className="col-span-full flex flex-col justify-center items-center py-16 sm:py-20">
-              <div className="relative mb-6">
-                <div className="animate-spin text-4xl sm:text-6xl">🍒</div>
-                <div className="absolute -top-1 -right-1 animate-bounce text-lg sm:text-2xl">✨</div>
-              </div>
-              <p className="text-lg sm:text-xl text-gray-600 mb-4">Loading magical reviews...</p>
-              <div className="flex space-x-2">
-                {[0, 1, 2].map(i => (
-                  <div 
-                    key={i}
-                    className="w-2 h-2 bg-pink-300 rounded-full animate-bounce"
-                    style={{ animationDelay: `${i * 0.2}s` }}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : filteredReviews.length === 0 ? (
-            // No results state
-            <div className="col-span-full text-center py-16 sm:py-20">
-              <div className="text-4xl sm:text-6xl mb-4">📚</div>
-              <p className="text-lg sm:text-xl text-gray-600 mb-2">
-                {searchQuery ? 'No books found' : 'No reviews yet'}
-              </p>
-              <p className="text-gray-500">
-                {searchQuery ? 'Try a different search term' : 'Be the first to add a review!'}
-              </p>
-            </div>
-          ) : (
-            // Optimized review cards
-            filteredReviews.map((review, index) => (
+      {/* REVIEWS */}
+      <main className="container mx-auto px-6 py-16" id="reviews">
+        <h2 className="text-3xl font-bold text-center mb-12">Latest Reviews</h2>
+        {loading ? (
+          <div className="text-center py-20">
+            <div className="animate-spin text-4xl mb-4">📘</div>
+            <p className="text-gray-500">Loading reviews...</p>
+          </div>
+        ) : filteredReviews.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="text-5xl mb-4">📚</div>
+            <p className="text-gray-600 mb-2">
+              {searchQuery ? "No books found" : "No reviews yet"}
+            </p>
+            <p className="text-gray-400">
+              {searchQuery ? "Try another search term." : "Be the first to add a review!"}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredReviews.map((review) => (
               <div
                 key={review.titleSlug}
-                className="bg-white/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-lg border border-pink-100 hover:border-pink-300 hover:shadow-2xl hover:shadow-pink-200/20 transform hover:scale-105 transition-all duration-300 group overflow-hidden"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden border"
               >
-                {/* Optimized image */}
-                <div className="relative overflow-hidden w-auto h-50 mx-auto"> 
+                <div className="h-48 relative">
                   <Image
                     src={review.imageUrl}
                     alt={review.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
+                    className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2 transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                    <span className="text-lg">💕</span>
-                  </div>
                 </div>
-                
-                <div className="p-4 sm:p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                    <span className="bg-gradient-to-r from-pink-200 to-rose-200 text-[#f00b0d] px-3 py-1 rounded-full text-sm font-semibold shadow-sm self-start">
-                      {review.categories || "General"} ✨
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-sm px-3 py-1 bg-gray-100 rounded-full">
+                      {review.categories || "General"}
                     </span>
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-1" style={{color:"#d4739fff"}} >
                       {renderStars(review.rating)}
-                      <span className="text-gray-600 ml-2 font-semibold text-sm">{review.rating}/5</span>
                     </div>
                   </div>
-                  
-                  <h4 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 group-hover:text-[#f00b0d] transition-colors duration-300 line-clamp-2">
+                  <h3 className="font-bold text-lg mb-2 line-clamp-2">
                     {review.title}
-                  </h4>
-                  
+                  </h3>
                   {review.meal && (
-                    <div className="bg-pink-50 rounded-xl sm:rounded-2xl p-3 mb-4 transform scale-95 group-hover:scale-100 transition-transform duration-300">
-                      <p className="text-sm text-gray-600 flex items-start sm:items-center gap-2">
-                        <span className="text-base">🫖</span>
-                        <span>
-                          <span className="font-medium">Perfect with:</span>
-                          <span className="block sm:inline sm:ml-1">{review.meal}</span>
-                        </span>
-                      </p>
-                    </div>
+                    <p className="text-sm text-gray-500 mb-4">
+                      Perfect with: {review.meal}
+                    </p>
                   )}
-                  
                   <Link
                     href={`/review/${review.titleSlug}`}
-                    className="block text-center bg-[#ffbdc8] text-black px-4 sm:px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm sm:text-base"
+                    className="block text-center text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition" style={{background:"#d4739fff"}}
                   >
-                    <span className="flex items-center justify-center space-x-2">
-                      <span>Read Our Review</span>
-                      <span>📖💕</span>
-                    </span>
+                    Read Review
                   </Link>
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
 
-    <footer className="bg-gray-800 text-white py-12 sm:py-16">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          
-          {/* Logo + description */}
-          <div className="space-y-4 text-center sm:text-left lg:col-span-1">
-            <div className="flex items-center justify-center sm:justify-start space-x-3 group">
-              <Image 
-                src="/images/logo.png" 
-                alt="Logo" 
-                width={240} 
-                height={120} 
-                className="w-auto h-auto rounded-full transition-transform duration-300"
-              />
-            </div>
-            <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
-              Your cozy corner for book reviews, warm recommendations, and comfort food 💕
+      {/* FOOTER */}
+      <footer className="bg-black text-gray-400 py-12 mt-12">
+        <div className="container mx-auto text-center px-6 grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div>
+            <Image src="/images/logo.png" alt="Logo" width={120} height={60} />
+            <p className="mt-4 text-sm">
+              Books&Bites – your destination for insightful book reviews.
             </p>
           </div>
-
-          {/* Navigation */}
-          <div className="text-center sm:text-left">
-            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Links</h5>
-            <ul className="space-y-2 sm:space-y-3">
-              <li>
-                <Link 
-                  href="/" 
-                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="#reviews" 
-                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
-                >
-                  Reviews
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/about" 
-                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
-                >
-                  About
-                </Link>
-              </li>
-              {/* Uncomment if needed
-              <li>
-                <Link 
-                  href="/about" 
-                  className="text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base inline-block hover:translate-x-1"
-                >
-                  Genres
-                </Link>
-              </li>
-              */}
+          <div>
+            <h5 className="font-semibold text-white mb-4">Links</h5>
+            <ul className="space-y-2">
+              <li><Link href="/" className="hover:text-white">Home</Link></li>
+              <li><Link href="#reviews" className="hover:text-white">Reviews</Link></li>
+              <li><Link href="/about" className="hover:text-white">About</Link></li>
             </ul>
           </div>
-
-          {/* Connect */}
-          <div className="text-center sm:text-left">
-            <h5 className="font-bold mb-4 sm:mb-6 text-pink-300 text-lg">Let&apos;s get in touch !</h5>
-            <ul className="space-y-2 sm:space-y-3 flex justify-center sm:justify-start">
-              <li>
-                <Link
-                  href="https://www.instagram.com/bookssnbites/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-gray-400 hover:text-pink-300 transition-all duration-300 text-sm sm:text-base space-x-2"
-                >
-                  <span>Instagram</span>
-                  <Image src="/images/insta.png" alt="Instagram" width={20} height={20} />
-                </Link>
-              </li>
-            </ul>
+          <div>
+            <h5 className="font-semibold text-white mb-4">Follow Us</h5>
+            <a
+              href="https://www.instagram.com/bookssnbites/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
+              Instagram
+            </a>
           </div>
-
         </div>
-        
-        {/* Bottom */}
-        <div className="border-t border-gray-700 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center">
-          <p className="text-gray-400 text-sm sm:text-base">
-            &copy; 2025 Books&Bites. All rights reserved. Made with 
-            <span className="text-pink-400 animate-pulse mx-1">💕</span> 
-            and lots of 
-            <span className="animate-bounce inline-block mx-1">🍒</span>
-            for book lovers everywhere.
-          </p>
+        <div className="mt-8 border-t border-gray-800 pt-6 text-center text-sm">
+          &copy; 2025 Books&Bites. All rights reserved.
         </div>
-      </div>
-    </footer>
+      </footer>
 
-      {/* Custom optimized styles */}
       <style jsx>{`
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
         }
       `}</style>
     </div>

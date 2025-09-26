@@ -39,22 +39,20 @@ export default function AddReview() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!imageFile) return alert("Veuillez sélectionner une image");
-    if (rating === 0) return alert("Veuillez donner une note");
+    if (!imageFile) return alert("Please select an image");
+    if (rating === 0) return alert("Please give a rating");
 
     setIsSubmitting(true);
 
     try {
-      // Upload image
       const formData = new FormData();
       formData.append("image", imageFile);
       const res = await fetch("/api/upload", { method: "POST", body: formData });
-      if (!res.ok) throw new Error("Échec de l'upload d'image");
+      if (!res.ok) throw new Error("Image upload failed");
       const data = await res.json();
       const imageUrl = `/images/${data.filename}`;
       const titleSlug = slugify(title);
 
-      // Add review to Firestore
       await addDoc(collection(db, "reviews"), {
         title,
         titleSlug,
@@ -66,17 +64,16 @@ export default function AddReview() {
         createdAt: serverTimestamp(),
       });
 
-      alert("Review ajouté avec succès !");
+      alert("Review added successfully!");
       router.push(`/review/${titleSlug}`);
     } catch (error) {
       console.error(error);
-      alert("Erreur lors de l'ajout du review. Veuillez réessayer.");
+      alert("Error adding review. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Helper pour afficher les étoiles, supportant les demi-étoiles
   const renderStars = () => {
     const stars = [];
     for (let i = 1; i <= 5; i += 0.5) {
@@ -91,7 +88,7 @@ export default function AddReview() {
         >
           <Star
             className={`w-8 h-8 ${
-              isFull ? "fill-yellow-400 text-yellow-400" : isHalf ? "fill-yellow-200 text-yellow-400" : "text-gray-300"
+              isFull ? "fill-[#d4739f] text-[#d4739f]" : isHalf ? "fill-pink-200 text-[#d4739f]" : "text-gray-300"
             }`}
           />
         </button>
@@ -101,137 +98,148 @@ export default function AddReview() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-2">
-            Review submission form
-          </h1>
-          <p className="text-gray-600">Let&apos;s get started</p>
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Submit a Review</h1>
+          <p className="text-gray-600">Share your thoughts with the community</p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl overflow-hidden p-8 space-y-8">
+        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md p-8 space-y-8 border border-gray-200">
           {/* Image upload */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-              <Camera className="w-5 h-5 text-red-500" />
+          <div className="space-y-3">
+            <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
+              <Camera className="w-5 h-5 text-[#d4739f]" />
               Picture
-            </div>
+            </label>
             {!imagePreview ? (
               <label className="block">
-                <div className="border-2 border-dashed border-red-300 rounded-2xl p-8 text-center cursor-pointer hover:border-red-500 hover:bg-red-50 transition-all duration-300 group">
-                  <Upload className="w-12 h-12 text-red-400 mx-auto mb-4 group-hover:text-red-500 group-hover:scale-110 transition-all duration-300" />
-                  <p className="text-lg font-medium text-gray-700 mb-2">Drop or click to add picture</p>
-                  <p className="text-sm text-gray-500">PNG, JPG, GIF MAX 10MB</p>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-[#d4739f] hover:bg-pink-50 transition">
+                  <Upload className="w-10 h-10 text-gray-400 mx-auto mb-4 group-hover:text-[#d4739f]" />
+                  <p className="text-gray-700 font-medium">Click to upload picture</p>
+                  <p className="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
                 </div>
                 <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" required />
               </label>
             ) : (
-                <div className="relative rounded-2xl overflow-hidden w-full h-64">
-                  <Image 
-                    src={imagePreview} 
-                    alt="Aperçu" 
-                    fill
-                    className="object-cover"
-                  />
-                  <button 
-                    type="button" 
-                    onClick={removeImage} 
-                    className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                  <div className="absolute bottom-3 left-3 bg-black/50 text-white px-3 py-1 rounded-lg text-sm">
-                    Picture selected
-                  </div>
+              <div className="relative rounded-lg overflow-hidden w-full h-64">
+                <Image src={imagePreview} alt="Preview" fill className="object-cover" />
+                <button
+                  type="button"
+                  onClick={removeImage}
+                  className="absolute top-3 right-3 bg-[#d4739f] text-white rounded-full p-2 hover:bg-pink-700 transition"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+                <div className="absolute bottom-3 left-3 bg-black/50 text-white px-3 py-1 rounded text-xs">
+                  Picture selected
                 </div>
+              </div>
             )}
           </div>
 
           {/* Title */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-              <MessageSquare className="w-5 h-5 text-red-500" />
-              Title of the book
+              <MessageSquare className="w-5 h-5 text-[#d4739f]" />
+              Book Title
             </label>
             <input
               type="text"
-              placeholder="Ex: Happy place by Emily Henry"
+              placeholder="Ex: Happy Place by Emily Henry"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 text-black focus:border-red-500 focus:outline-none text-lg transition-colors"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black focus:border-[#d4739f] focus:outline-none text-base"
               required
             />
           </div>
 
           {/* Rating */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-              <Star className="w-5 h-5 text-red-500" />
-              Global rating
+              <Star className="w-5 h-5 text-[#d4739f]" />
+              Global Rating
             </label>
             <div className="flex items-center gap-1">
               {renderStars()}
-              {rating > 0 && <span className="ml-4 text-2xl font-bold text-yellow-500">{rating}/5</span>}
+              {rating > 0 && <span className="ml-4 text-lg font-medium text-[#d4739f]">{rating}/5</span>}
             </div>
           </div>
 
           {/* Review */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-              <MessageSquare className="w-5 h-5 text-red-500" />
-              Our review
+              <MessageSquare className="w-5 h-5 text-[#d4739f]" />
+              Review
             </label>
             <textarea
-              placeholder="Copy paste from insta don't be dumb"
+              placeholder="Write your review here..."
               value={review}
               onChange={(e) => setReview(e.target.value)}
               rows={6}
-              className="w-full px-4 py-4 rounded-xl border-2 text-black border-gray-200 focus:border-red-500 focus:outline-none text-lg resize-none transition-colors"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black focus:border-[#d4739f] focus:outline-none text-base resize-none"
               required
             />
-            <div className="text-sm text-gray-500 text-right">{review.length}/500 caractères</div>
+            <div className="text-sm text-gray-500 text-right">{review.length}/500 characters</div>
           </div>
 
           {/* Categories & Meal */}
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-3">
+            <div className="space-y-2">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-                <Tag className="w-5 h-5 text-red-500" />
+                <Tag className="w-5 h-5 text-[#d4739f]" />
                 Categories
               </label>
-              <input type="text" placeholder="#romance #thriller #whatever" value={categories} onChange={(e) => setCategories(e.target.value)} className="w-full px-4 py-4 rounded-xl text-black border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
+              <input
+                type="text"
+                placeholder="#romance #thriller"
+                value={categories}
+                onChange={(e) => setCategories(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black focus:border-[#d4739f] focus:outline-none text-base"
+              />
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-                <Utensils className="w-5 h-5 text-red-500" />
+                <Utensils className="w-5 h-5 text-[#d4739f]" />
                 Meal
               </label>
-              <input type="text" placeholder="Sushi, Burger King,..." value={meal} onChange={(e) => setMeal(e.target.value)} className="w-full px-4 py-4 text-black rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none text-lg transition-colors" />
+              <input
+                type="text"
+                placeholder="Sushi, Burger, ..."
+                value={meal}
+                onChange={(e) => setMeal(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black focus:border-[#d4739f] focus:outline-none text-base"
+              />
             </div>
           </div>
 
           {/* Submit */}
           <div className="pt-4">
-            <button type="submit" disabled={isSubmitting} className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-3 ${isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-lg hover:shadow-xl"}`}>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`w-full py-4 rounded-lg font-semibold text-white transition transform hover:scale-[1.01] flex items-center justify-center gap-3 ${
+                isSubmitting
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#d4739f] hover:bg-pink-700 shadow-md"
+              }`}
+            >
               {isSubmitting ? (
                 <>
-                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Review is being typed..
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Submitting...
                 </>
               ) : (
                 <>
                   <Send className="w-5 h-5" />
-                  Submit your review !
+                  Submit Review
                 </>
               )}
             </button>
           </div>
         </form>
-
-        {/* Footer */}
       </div>
     </div>
   );
