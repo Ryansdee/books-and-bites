@@ -62,19 +62,14 @@ export default function AddReview() {
       const formData = new FormData();
       formData.append("image", imageFile);
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
 
       const data = await res.json();
       console.log("Upload response:", data);
 
-      if (!res.ok) {
-        throw new Error(data.error || "Image upload failed");
-      }
+      if (!res.ok) throw new Error(data.error || "Upload failed");
 
-      const imageUrl = `/images/${data.filename}`;
+      const imageUrl = data.url;
       const titleSlug = slugify(title);
 
       // 2️⃣ Ajouter dans Firestore
