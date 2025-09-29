@@ -4,7 +4,16 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import { useRouter } from "next/navigation";
-import { Star, Upload, X, Camera, MessageSquare, Tag, Utensils, Send } from "lucide-react";
+import {
+  Star,
+  Upload,
+  X,
+  Camera,
+  MessageSquare,
+  Tag,
+  Utensils,
+  Send,
+} from "lucide-react";
 import Image from "next/image";
 
 export default function AddReview() {
@@ -20,7 +29,11 @@ export default function AddReview() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const slugify = (text: string) =>
-    text.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,14 +58,26 @@ export default function AddReview() {
     setIsSubmitting(true);
 
     try {
+      // 1️⃣ Uploader l’image
       const formData = new FormData();
       formData.append("image", imageFile);
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      if (!res.ok) throw new Error("Image upload failed");
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
       const data = await res.json();
+      console.log("Upload response:", data);
+
+      if (!res.ok) {
+        throw new Error(data.error || "Image upload failed");
+      }
+
       const imageUrl = `/images/${data.filename}`;
       const titleSlug = slugify(title);
 
+      // 2️⃣ Ajouter dans Firestore
       await addDoc(collection(db, "reviews"), {
         title,
         titleSlug,
@@ -67,7 +92,7 @@ export default function AddReview() {
       alert("Review added successfully!");
       router.push(`/review/${titleSlug}`);
     } catch (error) {
-      console.error(error);
+      console.error("Submit error:", error);
       alert("Error adding review. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -88,7 +113,11 @@ export default function AddReview() {
         >
           <Star
             className={`w-8 h-8 ${
-              isFull ? "fill-[#d4739f] text-[#d4739f]" : isHalf ? "fill-pink-200 text-[#d4739f]" : "text-gray-300"
+              isFull
+                ? "fill-[#d4739f] text-[#d4739f]"
+                : isHalf
+                ? "fill-pink-200 text-[#d4739f]"
+                : "text-gray-300"
             }`}
           />
         </button>
@@ -102,12 +131,19 @@ export default function AddReview() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Submit a Review</h1>
-          <p className="text-gray-600">Share your thoughts with the community</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Submit a Review
+          </h1>
+          <p className="text-gray-600">
+            Share your thoughts with the community
+          </p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md p-8 space-y-8 border border-gray-200">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-xl shadow-md p-8 space-y-8 border border-gray-200"
+        >
           {/* Image upload */}
           <div className="space-y-3">
             <label className="flex items-center gap-2 text-lg font-semibold text-gray-800">
@@ -118,14 +154,27 @@ export default function AddReview() {
               <label className="block">
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-[#d4739f] hover:bg-pink-50 transition">
                   <Upload className="w-10 h-10 text-gray-400 mx-auto mb-4 group-hover:text-[#d4739f]" />
-                  <p className="text-gray-700 font-medium">Click to upload picture</p>
+                  <p className="text-gray-700 font-medium">
+                    Click to upload picture
+                  </p>
                   <p className="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
                 </div>
-                <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" required />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  required
+                />
               </label>
             ) : (
               <div className="relative rounded-lg overflow-hidden w-full h-64">
-                <Image src={imagePreview} alt="Preview" fill className="object-cover" />
+                <Image
+                  src={imagePreview}
+                  alt="Preview"
+                  fill
+                  className="object-cover"
+                />
                 <button
                   type="button"
                   onClick={removeImage}
@@ -164,7 +213,11 @@ export default function AddReview() {
             </label>
             <div className="flex items-center gap-1">
               {renderStars()}
-              {rating > 0 && <span className="ml-4 text-lg font-medium text-[#d4739f]">{rating}/5</span>}
+              {rating > 0 && (
+                <span className="ml-4 text-lg font-medium text-[#d4739f]">
+                  {rating}/5
+                </span>
+              )}
             </div>
           </div>
 
@@ -181,8 +234,11 @@ export default function AddReview() {
               rows={6}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black focus:border-[#d4739f] focus:outline-none text-base resize-none"
               required
+              maxLength={500}
             />
-            <div className="text-sm text-gray-500 text-right">{review.length}/500 characters</div>
+            <div className="text-sm text-gray-500 text-right">
+              {review.length}/500 characters
+            </div>
           </div>
 
           {/* Categories & Meal */}

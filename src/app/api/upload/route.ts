@@ -16,21 +16,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "File too large" }, { status: 400 });
     }
 
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    // Lire le fichier
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
     // Dossier de destination
     const uploadDir = path.join(process.cwd(), "public/images");
-
-    // Crée le dossier s’il n’existe pas
     await fs.mkdir(uploadDir, { recursive: true });
 
     // Nom unique
     const filename = `${Date.now()}-${file.name}`;
-    const savePath = path.join(uploadDir, filename);
+    const filepath = path.join(uploadDir, filename);
 
-    await fs.writeFile(savePath, buffer);
+    // Écrire le fichier
+    await fs.writeFile(filepath, buffer);
 
+    // Retourner le nom de fichier
     return NextResponse.json({ filename }, { status: 200 });
   } catch (error) {
     console.error("Upload error:", error);
