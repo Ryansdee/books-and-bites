@@ -114,7 +114,7 @@ export default function AboutPage() {
             Meet Our Book Lovers
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            We're a passionate team of readers sharing honest reviews, thoughtful recommendations, and our love for literature with the world.
+            We&apos;re a passionate team of readers sharing honest reviews, thoughtful recommendations, and our love for literature with the world.
           </p>
         </div>
       </section>
@@ -173,7 +173,7 @@ export default function AboutPage() {
                           </h2>
                         </Link>
                         <p className="text-xl text-gray-600 italic leading-relaxed max-w-xl">
-                          "{profile.quote}"
+                          &quot;{profile.quote}&quot;
                         </p>
                       </div>
 
@@ -239,7 +239,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold text-white mb-3">Building Community</h3>
               <p className="text-gray-400 leading-relaxed">
-                Books bring people together. We're creating a space where readers can connect and share.
+                Books bring people together. We&apos;re creating a space where readers can connect and share.
               </p>
             </div>
 

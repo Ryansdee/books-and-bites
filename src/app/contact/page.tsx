@@ -85,10 +85,10 @@ export default function ContactPage() {
             Get in Touch
           </span>
           <h1 className="text-5xl md:text-6xl font-black mb-6">
-            Let's Talk Books
+            Let&apos;s Talk Books
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Have a book recommendation? A question about our reviews? Or just want to chat about your latest read? We'd love to hear from you!
+            Have a book recommendation? A question about our reviews? Or just want to chat about your latest read? We&apos;d love to hear from you!
           </p>
         </div>
       </section>

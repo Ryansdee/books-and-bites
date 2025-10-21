@@ -263,7 +263,7 @@ export default function AdminProfileEditPage() {
           </h3>
           <p className="text-blue-700 text-sm leading-relaxed">
             Your changes will be visible immediately on your profile page and the About page. 
-            Make sure to keep your "Currently Reading" updated so your readers know what you're enjoying!
+            Make sure to keep your &quot;Currently Reading&quot; updated so your readers know what you&apos;re enjoying!
           </p>
         </div>
       </main>

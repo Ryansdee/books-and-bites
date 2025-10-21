@@ -126,7 +126,7 @@ export default function ProfilePage() {
 
             <h1 className="text-5xl md:text-6xl font-black mb-6">{profile.name}</h1>
             <p className="text-2xl text-gray-300 italic max-w-2xl leading-relaxed">
-              "{profile.quote}"
+              &quot;{profile.quote}&quot;
             </p>
           </div>
         </div>
@@ -181,7 +181,7 @@ export default function ProfilePage() {
           {/* Quote Card */}
           <div className="mt-12 bg-black text-white rounded-2xl p-10 text-center">
             <p className="text-xl md:text-2xl italic leading-relaxed">
-              "{profile.quote}"
+              &quot;{profile.quote}&quot;
             </p>
             <p className="mt-6 text-gray-400 font-semibold">
               — {profile.name}
