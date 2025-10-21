@@ -9,6 +9,10 @@ const nextConfig = {
       },
     ],
   },
+  // Empêcher le prerendering des routes API
+  experimental: {
+    dynamicIO: true,
+  },
 };
 
 module.exports = nextConfig;
