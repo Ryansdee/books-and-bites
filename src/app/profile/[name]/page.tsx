@@ -93,13 +93,6 @@ export default function ProfilePage() {
               About
             </Link>
             <Link
-              href={`/admin/profile/${name}`}
-              className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-800 transition-colors font-medium"
-            >
-              <span>✏️</span>
-              Edit
-            </Link>
-            <Link
               href="/about"
               className="px-6 py-2.5 rounded-lg bg-[#d4739f] text-white font-semibold hover:bg-[#b85c89] transition-colors"
             >
