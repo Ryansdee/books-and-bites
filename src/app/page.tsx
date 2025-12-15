@@ -209,7 +209,7 @@ export default function HomePage() {
                 <div className="relative w-full h-full bg-black border-2 border-gray-800 rounded-2xl p-6 shadow-2xl">
                   <div className="w-full h-48 bg-gray-900 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
                     <div className="text-6xl">
-                      <Image src="/images/Ivana.png" alt="Reader 2" fill className="object-contain" />
+                      <Image src="/images/Ivana.webp" alt="Reader 2" fill className="object-contain" />
                     </div>
                   </div>
                   <div className="space-y-2">
@@ -227,7 +227,7 @@ export default function HomePage() {
                 <div className="relative w-full h-full bg-black border-2 border-gray-800 rounded-2xl p-6 shadow-2xl">
                   <div className="w-full h-40 bg-gray-900 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
                     <div className="text-6xl">
-                      <Image src="/images/Saki.png" alt="Reader 2" fill className="object-contain" />
+                      <Image src="/images/Saki.webp" alt="Reader 2" fill className="object-contain" />
                     </div>
                   </div>
                   <div className="space-y-2">
@@ -245,7 +245,7 @@ export default function HomePage() {
                 <div className="relative w-full h-full bg-black border-2 border-gray-800 rounded-2xl p-6 shadow-2xl">
                   <div className="w-full h-48 bg-gray-900 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
                     <div className="text-6xl">
-                      <Image src="/images/Loor.png" alt="Reader 2" fill className="object-contain" />
+                      <Image src="/images/Loor.webp" alt="Reader 2" fill className="object-contain" />
                     </div>
                   </div>
                   <div className="space-y-2">
