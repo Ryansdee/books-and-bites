@@ -208,8 +208,9 @@ export default function HomePage() {
               <div className="absolute top-0 left-0 w-64 h-80 animate-float">
                 <div className="relative w-full h-full bg-black border-2 border-gray-800 rounded-2xl p-6 shadow-2xl">
                   <div className="w-full h-48 bg-gray-900 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <div className="text-6xl">👤</div>
-                    {/* Replace with: <Image src="/images/character1.png" alt="Reader 1" fill className="object-contain" /> */}
+                    <div className="text-6xl">
+                      <Image src="/images/Ivana.png" alt="Reader 2" fill className="object-contain" />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <div className="h-2 bg-gray-800 rounded-full w-3/4"></div>
@@ -225,8 +226,9 @@ export default function HomePage() {
               <div className="absolute bottom-0 left-12 w-56 h-72 animate-float animation-delay-2">
                 <div className="relative w-full h-full bg-black border-2 border-gray-800 rounded-2xl p-6 shadow-2xl">
                   <div className="w-full h-40 bg-gray-900 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <div className="text-6xl">👤</div>
-                    {/* Replace with: <Image src="/images/character2.png" alt="Reader 2" fill className="object-contain" /> */}
+                    <div className="text-6xl">
+                      <Image src="/images/Saki.png" alt="Reader 2" fill className="object-contain" />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <div className="h-2 bg-gray-800 rounded-full w-2/3"></div>
@@ -242,8 +244,9 @@ export default function HomePage() {
               <div className="absolute top-32 right-0 w-64 h-80 animate-float animation-delay-4">
                 <div className="relative w-full h-full bg-black border-2 border-gray-800 rounded-2xl p-6 shadow-2xl">
                   <div className="w-full h-48 bg-gray-900 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <div className="text-6xl">👤</div>
-                    {/* Replace with: <Image src="/images/character3.png" alt="Reader 3" fill className="object-contain" /> */}
+                    <div className="text-6xl">
+                      <Image src="/images/Loor.png" alt="Reader 2" fill className="object-contain" />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <div className="h-2 bg-gray-800 rounded-full w-3/4"></div>

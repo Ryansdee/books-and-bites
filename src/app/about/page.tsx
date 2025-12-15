@@ -148,18 +148,14 @@ export default function AboutPage() {
                     <div className={`flex-shrink-0 ${profile.alignment === 'center' ? 'md:w-1/2' : 'md:w-1/3'}`}>
                       <Link href={`/profile/${profile.slug}`} className="block group">
                         <div className="relative aspect-square w-full max-w-md mx-auto lg:max-w-none overflow-hidden transition-all duration-300 group-hover:scale-105">
-                          <div className="w-full h-full flex items-center justify-center text-9xl">
-                            👤
-                          </div>
-                          {/* Remplacez par vos vraies images:
                           <Image 
                             src={profile.avatar} 
                             alt={profile.name}
-                            fill
+                            width={200}
+                            height={400}
                             className="object-cover"
                             priority
                           />
-                          */}
                         </div>
                       </Link>
                     </div>

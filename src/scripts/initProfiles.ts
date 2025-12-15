@@ -43,7 +43,7 @@ const profiles = [
   },
   {
     id: "laure",
-    name: "Laure",
+    name: "Loor",
     slug: "laure",
     avatar: "/images/laure.png",
     quote: "A cup of coffee and a good book make the perfect day",
@@ -55,7 +55,7 @@ const profiles = [
   },
   {
     id: "sandra",
-    name: "Sandra",
+    name: "Saki",
     slug: "sandra",
     avatar: "/images/sandra.png",
     quote: "Books are portals to infinite worlds",

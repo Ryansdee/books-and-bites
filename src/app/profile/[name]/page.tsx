@@ -116,8 +116,7 @@ export default function ProfilePage() {
             {/* Avatar */}
             <div className="relative w-48 h-48 mb-8">
               <div className="w-full h-full bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center shadow-2xl">
-                <div className="text-8xl">👤</div>
-                {/* Remplacez par: <Image src={profile.avatar} alt={profile.name} fill className="object-cover rounded-full" /> */}
+                <Image src={profile.avatar} alt={profile.name} fill className="object-cover rounded-full" />
               </div>
               <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-[#d4739f] rounded-full flex items-center justify-center text-3xl shadow-lg border-4 border-gray-900">
                 📚
